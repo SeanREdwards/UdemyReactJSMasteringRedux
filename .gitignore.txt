@@ -1,2 +1,0 @@
-# API
-./memegenerator/src/Actions/secrets.js
