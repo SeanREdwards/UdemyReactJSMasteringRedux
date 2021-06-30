@@ -1,2 +1,2 @@
 # API
-./src/Actions/secrets.js
+./memegenerator/src/Actions/secrets.js
