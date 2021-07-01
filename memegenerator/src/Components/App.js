@@ -1,14 +1,76 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Form } from 'react-bootstrap'
+
+import MemeItem from './MemeItem';
+import MyMemes from './MyMemes';
+
+import '../Styles/index.css'
 
 class App extends Component{
+    constructor(){
+        super();
+
+        this.state ={
+            memeLimit: 10,
+            text0: '',
+            text1: ''
+        }
+    }
 
     render(){
         return(
             <div>
-                <h2>Welcome to the MemeGenerator!</h2>
+                <h2><u>Welcome to the Meme Generator!</u></h2>
+                <MyMemes/>
+                <h4><i>Write Some Text</i></h4>
+                <Form inline={true}>
+                    <Form.Group>
+                        <Form.Label>Top</Form.Label>
+                        {' '}
+                        <Form.Control
+                            type="text"
+                            onChange={event => this.setState({text0: event.target.value})}
+                        ></Form.Control>
+                    </Form.Group>
+                    {' '}
+                    <Form.Group>
+                        <Form.Label>Bottom</Form.Label>
+                        {' '}
+                        <Form.Control
+                            type="text"
+                            onChange={event => this.setState({text1: event.target.value})}
+                        ></Form.Control>
+                    </Form.Group>
+                </Form>
+                {
+                    this.props.memes.slice(0, this.state.memeLimit).map((meme, index) => {
+                        return(
+                            <MemeItem 
+                                key={index}
+                                meme={meme}
+                                text0={this.state.text0}
+                                text1={this.state.text1}
+                            />
+                        )
+                    }) 
+
+                }
+                <div                     
+                    className="meme-button"
+                    onClick={() => {
+                        this.setState({memeLimit: this.state.memeLimit + 10})
+                    }}   
+                >
+                    Load 10 more memes...
+                </div>
             </div>
         )
     }
 }
 
-export default App;
+function mapStateToProps(state){
+    return state;
+}
+
+export default connect(mapStateToProps, null)(App);
